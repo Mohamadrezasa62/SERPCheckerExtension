@@ -45,5 +45,13 @@
     if (cell || row.length) { row.push(cell); rows.push(row); }
     return rows;
   }
-  window.RankTracker = { load, save, normalizeDomain, normalizeKeywords, faNumber, escapeHtml, csvCell, parseCsv };
+  function readFileText(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || ''));
+      reader.onerror = () => reject(reader.error || new Error('Could not read the selected file.'));
+      reader.readAsText(file);
+    });
+  }
+  window.RankTracker = { load, save, normalizeDomain, normalizeKeywords, faNumber, escapeHtml, csvCell, parseCsv, readFileText };
 })();

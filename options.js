@@ -1,4 +1,4 @@
-const { load, save, normalizeKeywords, normalizeDomain, faNumber, escapeHtml, csvCell, parseCsv } = window.RankTracker;
+const { load, save, normalizeKeywords, normalizeDomain, faNumber, escapeHtml, csvCell, parseCsv, readFileText } = window.RankTracker;
 const domainInput = document.getElementById('domain');
 const keywordsInput = document.getElementById('keywords');
 const editor = document.getElementById('result-editor');
@@ -69,7 +69,10 @@ document.getElementById('export-csv').addEventListener('click', () => {
 document.getElementById('import-csv').addEventListener('click', () => document.getElementById('csv-file').click());
 document.getElementById('csv-file').addEventListener('change', async event => {
   const file = event.target.files?.[0]; if (!file) return;
-  const rows = parseCsv(await file.text()).filter(row => row.some(cell => cell.trim()));
+  let fileText;
+  try { fileText = await readFileText(file); }
+  catch { showToast('خواندن فایل انجام نشد. دوباره امتحان کن.'); event.target.value = ''; return; }
+  const rows = parseCsv(fileText).filter(row => row.some(cell => cell.trim()));
   if (!rows.length) { showToast('فایل خالی است.'); return; }
   const header = rows[0].map(cell => cell.trim().toLowerCase());
   const hasHeader = header.some(cell => ['keyword', 'عبارت', 'کلمه کلیدی'].includes(cell));
@@ -94,8 +97,6 @@ document.getElementById('csv-file').addEventListener('change', async event => {
     if (!domainInput.value.trim() && domain) domainInput.value = domain;
   });
   const merged = normalizeKeywords([...currentKeywords(), ...importedKeywords]);
-  const replaceResults = confirm('فهرست عبارت‌ها با موارد CSV ادغام شود؟ نتایج CSV برای عبارت‌های هم‌نام جایگزین می‌شوند.');
-  if (!replaceResults) { event.target.value = ''; return; }
   state.results = { ...state.results, ...importedResults };
   keywordsInput.value = merged.join('\n'); refreshEditor();
   await save({ ...state, domain: domainInput.value, keywords: merged, results: { ...state.results, ...captureResults() } }).then(next => { state = next; });
