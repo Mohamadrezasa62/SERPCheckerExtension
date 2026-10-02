@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "رتبه‌بان — مدیریت عبارت‌ها",
+  "version": "0.1.0",
+  "description": "مدیریت محلی عبارت‌های هدف و ثبت دستی نتایج رتبه‌بندی.",
+  "action": {
+    "default_title": "رتبه‌بان",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "permissions": ["storage"]
+}

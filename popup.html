@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>رتبه‌بان</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="popup">
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">ر</div>
+    <div><h1>رتبه‌بان</h1><p id="site-label" class="muted">فهرست عبارت‌ها</p></div>
+    <button id="open-options" class="icon-button" title="تنظیمات" aria-label="تنظیمات">⚙</button>
+  </header>
+  <main>
+    <section class="summary-card">
+      <div><span id="keyword-count" class="metric">۰</span><span class="metric-label">عبارت هدف</span></div>
+      <div><span id="ranked-count" class="metric">۰</span><span class="metric-label">نتیجه ثبت‌شده</span></div>
+      <div><span id="updated-at" class="metric small-metric">—</span><span class="metric-label">آخرین ویرایش</span></div>
+    </section>
+    <div class="section-heading"><h2>عبارت‌ها</h2><button id="add-keyword" class="text-button">＋ افزودن</button></div>
+    <div id="keyword-list" class="keyword-list"></div>
+    <div id="empty-state" class="empty-state hidden"><span class="empty-icon">⌕</span><strong>هنوز عبارتی اضافه نشده</strong><span>فهرست عبارت‌ها را از تنظیمات وارد کن.</span><button id="empty-options" class="primary-button">باز کردن تنظیمات</button></div>
+    <p class="footnote">رتبه‌ها در این نسخه به‌صورت دستی ثبت می‌شوند و فقط روی همین دستگاه نگه‌داری می‌شوند.</p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

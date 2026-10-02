@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تنظیمات رتبه‌بان</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="options-page">
+  <header class="options-header"><a class="back-link" href="popup.html">← بازگشت</a><div class="brand-mark">ر</div><div><h1>تنظیمات پروژه</h1><p class="muted">اطلاعات و عبارت‌های هدف</p></div></header>
+  <main class="settings-layout">
+    <section class="panel">
+      <div class="panel-title"><div><h2>دامنه‌ی سایت</h2><p class="muted">دامنه‌ای که می‌خواهی برایش رتبه‌ها را پیگیری کنی.</p></div></div>
+      <label class="field-label" for="domain">دامنه</label>
+      <div class="domain-input"><span>https://</span><input id="domain" type="text" placeholder="example.ir" autocomplete="url" dir="ltr"></div>
+      <p class="help-text">آدرس کامل یا فقط دامنه را وارد کن؛ مسیرها و اسلش پایانی نادیده گرفته می‌شوند.</p>
+    </section>
+    <section class="panel">
+      <div class="panel-title"><div><h2>فهرست عبارت‌ها</h2><p class="muted">هر عبارت را در یک خط بنویس. همچنین می‌توانی فایل CSV وارد یا خروجی بگیری.</p></div><span id="keyword-total" class="count-pill">۰ عبارت</span></div>
+      <label class="field-label" for="keywords">عبارت‌های هدف</label>
+      <textarea id="keywords" rows="9" placeholder="خرید کفش&#10;آموزش برنامه‌نویسی&#10;فروشگاه آنلاین تهران"></textarea>
+      <div class="import-row"><span id="parse-hint" class="help-text">هر عبارت در یک خط؛ موارد تکراری خودکار حذف می‌شوند.</span><div class="button-row"><button id="import-csv" class="secondary-button">ورود CSV</button><button id="export-csv" class="secondary-button">خروجی CSV</button><input id="csv-file" type="file" accept=".csv,text/csv" hidden></div></div>
+    </section>
+    <section class="panel results-panel">
+      <div class="panel-title"><div><h2>ثبت دستی رتبه</h2><p class="muted">رتبه و یادداشت دلخواه را برای هر عبارت وارد کن. این نسخه به نتایج موتور جست‌وجو وصل نیست.</p></div></div>
+      <div id="result-editor" class="result-editor"></div>
+      <div id="no-results" class="no-results">ابتدا چند عبارت در بالا وارد کن تا بتوانی نتایج را ثبت کنی.</div>
+    </section>
+    <footer class="settings-footer"><span id="save-status" class="save-status">تغییرات ذخیره می‌شوند</span><button id="save-settings" class="primary-button">ذخیره‌ی تغییرات</button></footer>
+  </main>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="common.js"></script><script src="options.js"></script>
+</body>
+</html>
