@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "رتبه‌بان — مدیریت عبارت‌ها",
-  "version": "0.1.0",
-  "description": "مدیریت محلی عبارت‌های هدف و ثبت دستی نتایج رتبه‌بندی.",
+  "name": "رتبه‌بان — بررسی خودکار رتبه",
+  "version": "0.2.0",
+  "description": "بررسی خودکار جایگاه عبارت‌های هدف با سرویس SERP و ذخیره‌ی نتایج.",
   "action": {
     "default_title": "رتبه‌بان",
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
-  "permissions": ["storage"]
+  "permissions": ["storage"],
+  "host_permissions": ["https://google.serper.dev/*"]
 }

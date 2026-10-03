@@ -16,19 +16,26 @@
       <p class="help-text">آدرس کامل یا فقط دامنه را وارد کن؛ مسیرها و اسلش پایانی نادیده گرفته می‌شوند.</p>
     </section>
     <section class="panel">
-      <div class="panel-title"><div><h2>فهرست عبارت‌ها</h2><p class="muted">هر عبارت را در یک خط بنویس. همچنین می‌توانی فایل CSV وارد یا خروجی بگیری.</p></div><span id="keyword-total" class="count-pill">۰ عبارت</span></div>
+      <div class="panel-title"><div><h2>منبع رتبه‌ها</h2><p class="muted">برای دریافت خودکار جایگاه نتایج ارگانیک، کلید API سرویس Serper را وارد کن.</p></div></div>
+      <label class="field-label" for="api-key">Serper API key</label>
+      <input id="api-key" class="full-input" type="password" placeholder="کلید API" autocomplete="off" dir="ltr">
+      <p class="help-text">عبارت‌های جست‌وجو برای بررسی رتبه به Serper ارسال می‌شوند. کلید و نتایج در همین مرورگر ذخیره می‌شوند.</p>
+      <div class="locale-row"><label>کشور <select id="country"><option value="ir">ایران</option><option value="us">آمریکا</option><option value="gb">بریتانیا</option><option value="ae">امارات</option></select></label><label>زبان <select id="language"><option value="fa">فارسی</option><option value="en">انگلیسی</option><option value="ar">عربی</option></select></label></div>
+    </section>
+    <section class="panel">
+      <div class="panel-title"><div><h2>فهرست عبارت‌ها</h2><p class="muted">هر عبارت را در یک خط بنویس. پس از ذخیره، جایگاه‌ها بررسی می‌شوند.</p></div><span id="keyword-total" class="count-pill">۰ عبارت</span></div>
       <label class="field-label" for="keywords">عبارت‌های هدف</label>
       <textarea id="keywords" rows="9" placeholder="خرید کفش&#10;آموزش برنامه‌نویسی&#10;فروشگاه آنلاین تهران"></textarea>
       <div class="import-row"><span id="parse-hint" class="help-text">هر عبارت در یک خط؛ موارد تکراری خودکار حذف می‌شوند.</span><div class="button-row"><button id="import-csv" class="secondary-button">ورود CSV</button><button id="export-csv" class="secondary-button">خروجی CSV</button><input id="csv-file" type="file" accept=".csv,text/csv" hidden></div></div>
     </section>
     <section class="panel results-panel">
-      <div class="panel-title"><div><h2>ثبت دستی رتبه</h2><p class="muted">رتبه و یادداشت دلخواه را برای هر عبارت وارد کن. این نسخه به نتایج موتور جست‌وجو وصل نیست.</p></div></div>
+      <div class="panel-title"><div><h2>نتایج رتبه</h2><p class="muted">جایگاه اولین نتیجه‌ی ارگانیک از دامنه‌ی شما نشان داده می‌شود.</p></div></div>
       <div id="result-editor" class="result-editor"></div>
       <div id="no-results" class="no-results">ابتدا چند عبارت در بالا وارد کن تا بتوانی نتایج را ثبت کنی.</div>
     </section>
-    <footer class="settings-footer"><span id="save-status" class="save-status">تغییرات ذخیره می‌شوند</span><button id="save-settings" class="primary-button">ذخیره‌ی تغییرات</button></footer>
+    <footer class="settings-footer"><span id="save-status" class="save-status">آماده</span><button id="save-settings" class="primary-button">ذخیره و بررسی رتبه‌ها</button></footer>
   </main>
   <div id="toast" class="toast hidden" role="status"></div>
-  <script src="common.js"></script><script src="options.js"></script>
+  <script src="common.js"></script><script src="serp.js"></script><script src="options.js"></script>
 </body>
 </html>

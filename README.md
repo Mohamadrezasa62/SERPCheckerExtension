@@ -1,80 +1,72 @@
 # SERP Checker Extension
 
-A lightweight Google Chrome extension for organizing the keywords you want to track and recording their search rankings. Keep a keyword list for your website, add rank observations and notes, and import or export your data as a CSV file.
+A lightweight Chrome extension that checks where your website appears for a list of keywords and saves the results. Version 0.2 uses the [Serper Google Search API](https://serper.dev/) to retrieve organic search results. You supply your own Serper API key.
 
-> **Current version:** This first milestone is a local keyword and rank tracker. It does not automatically search Google or collect live SERP rankings. Enter rank observations manually. Search Console or another permitted ranking data source can be added in a later milestone.
+## What it does
 
-## Features
+- Checks keywords automatically when you select **Save and check ranks**.
+- Finds the highest organic position whose result URL is on your domain or one of its subdomains.
+- Saves each keyword's position, matching URL, check time, and status in Chrome local storage.
+- Shows progress and results in a Persian right-to-left interface.
+- Imports keyword lists from CSV and exports the saved results to CSV.
+- Lets you choose the search country and language. The default is Iran and Persian.
 
-- Save your website domain and target keywords locally in Chrome.
-- Add keywords one per line; duplicate entries are removed automatically.
-- Record a rank and an optional note for each keyword.
-- Import keywords and rank observations from CSV.
-- Export your keyword list, domain, ranks, notes, and observation dates to CSV.
-- Use the extension UI in Persian with right-to-left layout.
-- No application server or JavaScript runtime library is required.
-
-Your project data is stored in Chrome's local extension storage and is not sent to a SERP service. The interface uses system fonts and does not load remote assets.
+The position comes from Serper's returned organic results. It can differ from what a person sees on Google because search results vary by location, device, time, and provider coverage. A “not found” result means the domain was absent from the **returned organic results**; the extension reports how many results were checked. It does not mean the site has no Google ranking at all.
 
 ## Install in Chrome
 
-This project is not packaged in the Chrome Web Store. Load it locally as an unpacked extension:
-
-1. Download or clone this repository to your computer.
-2. Open `chrome://extensions` in Google Chrome.
-3. Turn on **Developer mode**.
-4. Select **Load unpacked**.
-5. Choose the project folder containing `manifest.json`.
-6. Pin the extension from Chrome's Extensions menu if you want it readily available in the toolbar.
+1. Download or clone this repository.
+2. Open `chrome://extensions` in Chrome.
+3. Enable **Developer mode**.
+4. Select **Load unpacked** and choose the folder containing `manifest.json`.
+5. If a previous version is already loaded, select its **Reload** button.
 
 ## How to use
 
-1. Select the **SERP Checker** icon in the Chrome toolbar.
-2. Choose the gear icon or **Add** to open project settings.
-3. Enter your website domain, such as `example.com` or `example.ir`.
-4. Add your target keywords in the keyword box, one phrase per line.
-5. Select **Save changes**.
-6. In **Record ranks**, enter a rank for each keyword and an optional note, such as the device, location, or check context. Select **Save changes** to store your edits.
-7. Open the extension popup to see a summary of your keyword list and saved ranks.
+1. Create a Serper account and copy its API key from [serper.dev](https://serper.dev/).
+2. Open the extension and select the gear icon or **Add** to open settings.
+3. Enter your website domain, for example `example.ir`.
+4. Enter the API key. Choose the search country and language.
+5. Add one keyword phrase per line, or import a CSV file.
+6. Select **Save and check ranks**. Keep the settings page open while the checks run.
+7. Read the saved positions in settings or the popup. Select **Export CSV** to download the results.
 
-Ranks in this milestone are user-entered observations. The extension does not open Google result pages or perform automated searches.
+The extension requests one search at a time and saves each result as it arrives. If the API rejects the key or reaches a request limit, the run stops and displays the error. Selecting **Save and check ranks** again starts a new run for the current list.
 
-## Import and export CSV
+## CSV
 
-From project settings, select **Import CSV** and choose a `.csv` file. A header row is supported. Column names can be in English or Persian:
+The importer accepts one keyword per line, or a CSV with a `keyword`, `عبارت`, or `کلمه کلیدی` column. A `domain` or `دامنه` column can fill an empty domain field. Example:
 
 ```csv
-keyword,domain,rank,note
-best running shoes,example.com,8,Mobile check
-خرید کفش,example.com,12,بررسی دستی
+keyword,domain
+خرید کفش,example.ir
+best running shoes,example.ir
 ```
 
-The importer also accepts a simple CSV without a header, with the keyword in the first column. When a header is present, recognized columns include `keyword` / `عبارت`, `domain` / `دامنه`, `rank` / `رتبه`, and `note` / `یادداشت`.
+The export contains `keyword`, `domain`, `rank`, `status`, `url`, and `checked_at`. Existing manually entered ranks from version 0.1 can still be displayed until the next automatic check replaces them.
 
-Select **Export CSV** to download the current keyword list, domain, rank, note, and rank observation timestamp.
+## Privacy and API use
 
-## Privacy
-
-- Keyword lists and rank observations are stored with `chrome.storage.local` on the current Chrome profile.
-- The extension does not currently contact Google Search or send your project data to an external ranking service.
-- The manifest requests only Chrome's `storage` permission.
+- The extension sends each keyword, country, and language to Serper to request a search result. The API key is sent to Serper in the `X-API-KEY` request header.
+- The key, domain, keywords, and results are stored in `chrome.storage.local` in your Chrome profile. Chrome local extension storage is not encrypted by this extension.
+- The extension requests access only to `https://google.serper.dev/*` and Chrome's `storage` permission.
+- Serper may meter or charge for API calls under your account. Each run requests one search per keyword until completion or a blocking API error.
 
 ## Browser smoke check
 
-On Windows with Chrome installed, run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-smoke.ps1`. The script opens an isolated headless Chrome profile, loads the unpacked extension, and checks saving, popup rendering, keyword editing, CSV import, and CSV export. If Chrome is installed elsewhere, pass its executable path with `-ChromePath`.
+On Windows with Chrome installed, run:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-smoke.ps1
+```
+
+The script loads the extension in an isolated headless Chrome profile and uses mocked Serper responses. It checks saving, domain matching, found and missing positions, popup display, CSV import/export, and API authentication errors. It does not use real API credits. Pass `-ChromePath` if Chrome is installed elsewhere.
 
 ## Project files
 
-- `manifest.json` — Chrome Manifest V3 configuration.
-- `popup.html`, `popup.js` — toolbar popup and keyword summary.
-- `options.html`, `options.js` — domain, keyword, rank, and CSV settings.
-- `common.js` — local storage, input normalization, and CSV helpers.
-- `styles.css` — Persian right-to-left interface styles.
-
-## Roadmap
-
-- Connect an authorized ranking data source, such as Google Search Console, for search performance data.
-- Compare observations across dates and show ranking trends.
-- Add optional location and device dimensions when supported by the selected data source.
-
-Google Search Console reports search performance data such as clicks, impressions, click-through rate, and average position. Average position is not the same as a live, location-specific rank for a single search. The data source and metric should be clearly identified in any future automatic ranking feature.
+- `manifest.json` — Manifest V3 configuration and permissions.
+- `popup.html`, `popup.js` — toolbar summary.
+- `options.html`, `options.js` — settings, progress, and results.
+- `common.js` — local storage and CSV helpers.
+- `serp.js` — Serper request and domain matching.
+- `styles.css` — Persian interface styles.

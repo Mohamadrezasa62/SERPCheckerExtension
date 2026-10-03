@@ -1,6 +1,6 @@
 (() => {
   const KEY = 'rankTrackerState';
-  const defaults = { domain: '', keywords: [], results: {}, updatedAt: null };
+  const defaults = { domain: '', keywords: [], results: {}, apiKey: '', country: 'ir', language: 'fa', updatedAt: null };
   function normalizeDomain(value) {
     const raw = String(value || '').trim();
     if (!raw) return '';
