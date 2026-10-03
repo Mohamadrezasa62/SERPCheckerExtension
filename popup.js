@@ -27,4 +27,9 @@ load().then(state => {
   }).join('');
   if (state.keywords.length > 7) list.insertAdjacentHTML('beforeend', `<button class="view-all" id="view-all">مشاهده‌ی همه‌ی ${faNumber(state.keywords.length)} عبارت ←</button>`);
   document.getElementById('view-all')?.addEventListener('click', openOptions);
+}).catch(() => {
+  document.getElementById('site-label').textContent = 'خطا در خواندن داده‌ها';
+  document.getElementById('empty-state').classList.remove('hidden');
+  document.querySelector('#empty-state strong').textContent = 'اطلاعات بارگذاری نشد';
+  document.querySelector('#empty-state span:last-of-type').textContent = 'افزونه را دوباره باز کن.';
 });

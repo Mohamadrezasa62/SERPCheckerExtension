@@ -14,7 +14,7 @@ A lightweight Google Chrome extension for organizing the keywords you want to tr
 - Use the extension UI in Persian with right-to-left layout.
 - No application server or JavaScript runtime library is required.
 
-Your project data is stored in Chrome's local extension storage and is not sent to a SERP service. The interface may request Google Fonts for its typeface; system fonts are used if they are unavailable.
+Your project data is stored in Chrome's local extension storage and is not sent to a SERP service. The interface uses system fonts and does not load remote assets.
 
 ## Install in Chrome
 
@@ -58,6 +58,10 @@ Select **Export CSV** to download the current keyword list, domain, rank, note, 
 - Keyword lists and rank observations are stored with `chrome.storage.local` on the current Chrome profile.
 - The extension does not currently contact Google Search or send your project data to an external ranking service.
 - The manifest requests only Chrome's `storage` permission.
+
+## Browser smoke check
+
+On Windows with Chrome installed, run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-smoke.ps1`. The script opens an isolated headless Chrome profile, loads the unpacked extension, and checks saving, popup rendering, keyword editing, CSV import, and CSV export. If Chrome is installed elsewhere, pass its executable path with `-ChromePath`.
 
 ## Project files
 
